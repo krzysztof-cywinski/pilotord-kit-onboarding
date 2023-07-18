@@ -2,9 +2,9 @@
 
 ## STR
 
-Este contrato que simula o STR. Por meio dele, os participantes autorizados podem emitir Real Digital.
+This contract simulates the STR. Through it, authorized participants can issue Real Digital.
 
-Para o piloto nenhuma validação é feita, bastando que o participante esteja autorizado.
+For the pilot, no validation is performed, it is sufficient that the participant is authorized.
 
 ### CBDC
 
@@ -12,7 +12,7 @@ Para o piloto nenhuma validação é feita, bastando que o participante esteja a
 contract RealDigital CBDC
 ```
 
-Referência ao contrato do Real Digital para checar se o participante é autorizado.
+Reference to the Real Digital contract to check if the participant is authorized.
 
 ### onlyParticipant
 
@@ -20,7 +20,7 @@ Referência ao contrato do Real Digital para checar se o participante é autoriz
 modifier onlyParticipant()
 ```
 
-Modificador de método: somente participantes podem executar a função
+Method modifier: only participants can execute the function.
 
 ### constructor
 
@@ -28,13 +28,13 @@ Modificador de método: somente participantes podem executar a função
 constructor(contract RealDigital token) public
 ```
 
-Constrói uma instância do contrato e armazena o endereço do Real Digital
+Builds an instance of the contract and stores the address of the Real Digital.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| token | contract RealDigital | Endereço do Real Digital |
+| token | contract RealDigital | Address of the Real Digital |
 
 ### requestToMint
 
@@ -42,13 +42,13 @@ Constrói uma instância do contrato e armazena o endereço do Real Digital
 function requestToMint(uint256 amount) modifier onlyParticipant() public
 ```
 
-Emite a quantidade de Real Digital informada em _amount_ para a própria carteira executora desta função
+Issues the amount of Real Digital informed in amount to the wallet that executes this function.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| amount | uint256 | Quantidade a ser emitida (obs: lembrar das 2 casas decimais) |
+| amount | uint256 | Amount to be issued (note: remember the 2 decimal places) |
 
 ### requestToBurn
 
@@ -56,11 +56,10 @@ Emite a quantidade de Real Digital informada em _amount_ para a própria carteir
 function requestToBurn(uint256 amount) modifier onlyParticipant() public
 ```
 
-Destrói a quantidade de Real Digital informada em _amount_ da própria carteira executora desta função
+Destroys the amount of Real Digital informed in amount from the wallet that executes this function.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| amount | uint256 | Quantidade a ser destruída (obs: lembrar das 2 casas decimais) |
-
+| amount | uint256 | Amount to be destroyed (note: remember the 2 decimal places) |

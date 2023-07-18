@@ -9,7 +9,7 @@
 mapping(address => uint256) frozenBalanceOf
 ```
 
-_Mapping_ das carteiras e respectivo valor congelado.
+_Mapping_ of wallets and their respective frozen balances.
 
 ### FrozenBalance
 
@@ -17,14 +17,14 @@ _Mapping_ das carteiras e respectivo valor congelado.
 event FrozenBalance(address wallet, uint256 amount)
 ```
 
-Evento emitido quando um valor de uma carteira é congelado.
+Event emitted when a wallet's balance is frozen.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| wallet | address | carteira que teve o fundo congelado |
-| amount | uint256 | quantidade congelada |
+| wallet | address | Wallet whose balance was frozen |
+| amount | uint256 | Frozen amount |
 
 ### checkFrozenBalance
 
@@ -32,7 +32,7 @@ Evento emitido quando um valor de uma carteira é congelado.
 modifier checkFrozenBalance(address from, uint256 amount)
 ```
 
-_Modifier_ para verificar se um endereço possui fundos suficientes. Usado no `_beforeTokenTransfer`.
+_Modifier_ to check if an address has enough funds. Used in `_beforeTokenTransfer`.
 
 ### constructor
 
@@ -40,20 +40,18 @@ _Modifier_ para verificar se um endereço possui fundos suficientes. Usado no `_
 constructor(string _name, string _symbol, address _authority, address _admin) public
 ```
 
-Construtor do token do Real Digital.
+Constructor of the Real Digital token.
 
-Invoca o construtor do ERC20 e dá permissão de autoridade para a carteira do BCB.
+Invokes the ERC20 constructor and gives authority permission to the BCB wallet.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _name | string | Nome do token: Real Digital |
-| _symbol | string | Símbolo do token: BRL |
-| _authority | address | Carteira responsável por emitir, resgatar, mover e congelar fundos (BCB) |
-| _admin | address | Carteira responsável por administrar o controle de acessos (BCB) |
-
-
+| _name | string | Token name: Real Digita |
+| _symbol | string | Token symbol: BRL |
+| _authority | address | Wallet responsible for issuing, redeeming, moving and freezing funds (BCB) |
+| _admin | address | Wallet responsible for managing access control (BCB) |
 
 
 ### pause
@@ -62,7 +60,7 @@ Invoca o construtor do ERC20 e dá permissão de autoridade para a carteira do B
 function pause() public
 ```
 
-Função para pausar o token em casos necessários, bloqueando-o para todas as operações.
+Function to pause the token in necessary cases, blocking it for all operations.
 
 ### unpause
 
@@ -70,7 +68,7 @@ Função para pausar o token em casos necessários, bloqueando-o para todas as o
 function unpause() public
 ```
 
-Função para despausar o token em casos necessários, desbloqueando-o para todas as operações.
+Function to unpause the token in necessary cases, unblocking it for all operations.
 
 ### mint
 
@@ -78,14 +76,14 @@ Função para despausar o token em casos necessários, desbloqueando-o para toda
 function mint(address to, uint256 amount) public
 ```
 
-Função para emitir tokens para as carteiras permitidas.
+Function to issue tokens to allowed wallets.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| to | address | carteira destino |
-| amount | uint256 | quantidade de tokens |
+| to | address | Destination wallet |
+| amount | uint256 | Token amount |
 
 ### _beforeTokenTransfer
 
@@ -93,14 +91,14 @@ Função para emitir tokens para as carteiras permitidas.
 function _beforeTokenTransfer(address from, address to, uint256 amount) internal
 ```
 
-Gatilho executado sempre que é solicitada uma movimentação de token, inclusive na criação e destruição de tokens.
+Trigger executed whenever a token movement is requested, including token creation and destruction.
 
-Condições de chamada:
+Call conditions:
 
-- quando `from` é zero, `amount` tokens serão emitidos `to`.
-- quando  `to` é zero, `amount` do `from` tokens serão destruídos.
-- `from` e `to` nunca serão simultaneamente zero.
-- `from` e `to` devem estar registrados como participantes.
+- when `from` is zero, `amount` tokens will be issued to `to`.
+- when `to` is zero, `amount` of `from` tokens will be destroyed.
+- `from` and `to` will never be simultaneously zero.
+- `from` and `to` must be registered as participants.
 
 ### decimals
 
@@ -108,7 +106,7 @@ Condições de chamada:
 function decimals() public view virtual returns (uint8)
 ```
 
-Retorna o número de casas decimais utilizadas na representação do valor do token. Por exemplo, se `decimals` for igual a `2`, um saldo de `505` tokens deve ser apresentado como `5.05` (`505 / 10 ** 2`).
+Returns the number of decimal places used in the token value representation. For example, if `decimals` is equal to `2`, a balance of `505` tokens should be presented as `5.05` (`505 / 10 ** 2`).
 
 ### move
 
@@ -116,15 +114,15 @@ Retorna o número de casas decimais utilizadas na representação do valor do to
 function move(address from, address to, uint256 amount) public
 ```
 
-Função para mover tokens de uma carteira para outra. Somente quem possuir MOVER_ROLE pode executar.
+Function to move tokens from one wallet to another. Only those who have MOVER_ROLE can execute.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| from | address | carteira origem |
-| to | address | carteira destino |
-| amount | uint256 | quantidade de tokens |
+| from | address | Source wallet |
+| to | address | Destination wallet |
+| amount | uint256 | Token amount |
 
 ### increaseFrozenBalance
 
@@ -132,14 +130,14 @@ Função para mover tokens de uma carteira para outra. Somente quem possuir MOVE
 function increaseFrozenBalance(address from, uint256 amount) public
 ```
 
-Função para incrementar tokens parcialmente bloqueados de uma carteira. Somente quem possuir FREEZER_ROLE pode executar.
+Function to increment partially blocked tokens from a wallet. Only those who have FREEZER_ROLE can execute.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| from | address | carteira origem |
-| amount | uint256 | quantidade de tokens |
+| from | address | Source wallet |
+| amount | uint256 | Token amount |
 
 ### decreaseFrozenBalance
 
@@ -147,14 +145,14 @@ Função para incrementar tokens parcialmente bloqueados de uma carteira. Soment
 function decreaseFrozenBalance(address from, uint256 amount) public
 ```
 
-Função para decrementar tokens parcialmente bloqueados de uma carteira. Somente quem possuir FREEZER_ROLE pode executar.
+Function to decrement partially blocked tokens from a wallet. Only those who have FREEZER_ROLE can execute.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| from | address | carteira origem |
-| amount | uint256 | quantidade de tokens |
+| from | address | Source wallet |
+| amount | uint256 | Token amount |
 
 ### burn
 
@@ -162,9 +160,9 @@ Função para decrementar tokens parcialmente bloqueados de uma carteira. Soment
 function burn(uint256 amount) public
 ```
 
-Destrói um determinado valor da carteira.
+Destroys a certain value from the wallet.
 
-Veja {ERC20-_burn}._
+See {ERC20-_burn}._
 
 ### moveAndBurn
 
@@ -172,14 +170,14 @@ Veja {ERC20-_burn}._
 function moveAndBurn(address from, uint256 amount) public
 ```
 
-Função para destruir tokens de uma carteira. Somente quem possuir MOVER_ROLE pode executar.
+Function to destroy tokens from a wallet. Only those who have MOVER_ROLE can execute.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| from | address | carteira origem |
-| amount | uint256 | quantidade de tokens |
+| from | address | Source wallet |
+| amount | uint256 | Token amount |
 
 ### burnFrom
 
@@ -187,11 +185,8 @@ Função para destruir tokens de uma carteira. Somente quem possuir MOVER_ROLE p
 function burnFrom(address account, uint256 amount) public
 ```
 
-Destrói `amount` tokens da  `account`, deduzindo alllowance do executor.
-Olhe {ERC20-_burn} e {ERC20-allowance}.
+Destroys `amount` tokens from `account`, deducting the allowance from the executor. See {ERC20-_burn} and {ERC20-allowance}.
 
-Requerimentos:
+Requirements:
 
-- o executor deve possuir autorização de mover fundos da  `accounts` de no mínimo o
-`amount`.
-
+- the executor must have authorization to move funds from `accounts` of at least `amount`.

@@ -2,30 +2,30 @@
 
 ## RealTokenizado
 
-Implementação do contrato do Real Tokenizado (DVt e MEt).
+Implementation of the Real Tokenizado (DVt and MEt) contract.
 
-Este contrato herda do Real Digital e todas as funções implementadas.
+This contract inherits from Real Digital and all implemented functions.
 
 ### participant
 
 ```solidity
 string participant
 ```
-_String_ que representa o nome do participante.
+_String_ representing the participant's name.
 
 ### cnpj8
 
 ```solidity
 uint256 cnpj8
 ```
-_Uitn256_ que representa o número da instituição.
+_Uitn256_ representing the institution's number.
 
 ### reserve
 
 ```solidity
 address reserve
 ```
-Carteira de reserva da instituição participante.
+Participant institution's reserve wallet.
 
 
 ### constructor
@@ -34,21 +34,21 @@ Carteira de reserva da instituição participante.
 constructor(string _name, string _symbol, address _authority, address _admin, string _participant, uint256 _cnpj8, address _reserve) public
 ```
 
-Construtor do token do Real Tokenizado.
+Real Tokenizado token constructor.
 
-Invoca o construtor do ERC20 e dá permissão de autoridade para a carteira do BCB.
+Invokes the ERC20 constructor and grants authority permission to the BCB wallet.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _name | string | Nome do token: Real Tokenizado (Instituiçâo) |
-| _symbol | string | Símbolo do token: BRL |
-| _authority | address | Carteira responsável por emitir, resgatar, mover e congelar fundos (BCB) |
-| _admin | address | Carteira responsável por administrar o controle de acessos (BCB) |
-| _participant | string | Identificação do participante como string. |
-| _cnpj8 | uint256 | Primeiros 8 digitos do CNPJ da instituição |
-| _reserve | address | Carteira de reserva da instituição |
+| _name | string | Token name: Real Tokenizado (Institution) |
+| _symbol | string | Token symbol: BRL |
+| _authority | address | Wallet responsible for issuing, redeeming, moving and freezing funds (BCB) |
+| _admin | address | Wallet responsible for managing access control (BCB) |
+| _participant | string | Participant identification as a string. |
+| _cnpj8 | uint256 | First 8 digits of the institution's CNPJ |
+| _reserve | address | Institution's reserve wallet |
 
 
 ### updateReserve
@@ -57,12 +57,11 @@ Invoca o construtor do ERC20 e dá permissão de autoridade para a carteira do B
 function updateReserve(address newReserve) public
 ```
 
-Função para atualizar a carteira de reserva do token. A carteira de reserva é usada pelo DvP
+Function to update the token's reserve wallet. The reserve wallet is used by DvP.
 
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| newReserve | address | Carteira da autoridade (Instituição) |
-
+| newReserve | address | Authority wallet (Institution) |

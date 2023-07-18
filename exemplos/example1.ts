@@ -2,25 +2,26 @@ import { ethers } from "hardhat";
 import abiSTR from "../abi/STR.json";
 import abiRealDigitalEnableAccount from "../abi/RealDigitalEnableAccount.json";
 
+// Function that returns a promise that resolves after a given number of milliseconds
 function delay(ms: number) {
     return new Promise( resolve => setTimeout(resolve, ms) );
 };
 
-// Habilita uma conta, emite valores e destrói valores.
+// Enables an account, mints tokens and burns tokens
 async function example1() {
-    const STR = await ethers.getContractAt(abiSTR, '<Endereço do contrato SRT>');
-    const enableAccount = await ethers.getContractAt(abiRealDigitalEnableAccount, '<Endereço do contrato RealDigitalEnableAccount>');
+    const STR = await ethers.getContractAt(abiSTR, '<SRT contract address>');
+    const enableAccount = await ethers.getContractAt(abiRealDigitalEnableAccount, '<RealDigitalEnableAccount contract address>');
     const [, participantX, anotherAddressParticipantX ] = await ethers.getSigners();
 
-    // Após ter um endereço habilitado pelo BACEN, a instituição pode habilitar novos endereços
+    // After an address is enabled by the BACEN, the institution can enable new addresses
     await enableAccount.connect(participantX).enableAccount(anotherAddressParticipantX.address);
 
-    // Sempre que um novo endereço for habilitado deve esperar o tempo de um bloco para estar apto a ser usado
+    // Whenever a new address is enabled, it must wait for one block time to be able to be used
     await delay(5000);
 
-    // Emite Real Digital para a carteira do participante
-    // Lembrar que são duas casas decimais, então se passar o valor 100 = 1 Real Digital
-    // ethers.utils.parseUnits("100.50", 2) pode ser usado para formatar um valor para o contrato
+    // Mints Real Digital to the participant's wallet
+    // Remember that there are two decimal places, so if you pass the value 100 = 1 Real Digital
+    // ethers.utils.parseUnits("100.50", 2) can be used to format a value for the contract
     const mintResponse = await STR.connect(anotherAddressParticipantX).requestToMint(ethers.utils.parseUnits("100.50", 2));
     console.log(mintResponse.hash);
     const burnResponse = await STR.connect(anotherAddressParticipantX).requestToBurn(ethers.utils.parseUnits("100", 2));

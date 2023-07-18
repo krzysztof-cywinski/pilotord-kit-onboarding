@@ -2,7 +2,7 @@
 
 ## RealDigitalDefaultAccount
 
-Contrato que permite aos participantes trocarem sua carteira _default_.
+Contract that allows participants to change their _default_ wallet.
 
 ### ACCESS_ROLE
 
@@ -10,7 +10,7 @@ Contrato que permite aos participantes trocarem sua carteira _default_.
 bytes32 ACCESS_ROLE
 ```
 
-_Role_ de acesso pertencente à autoridade do contrato.
+Access _role_ belonging to the contract authority.
 
 
 ### CBDC
@@ -19,7 +19,7 @@ _Role_ de acesso pertencente à autoridade do contrato.
 contract RealDigital CBDC
 ```
 
-Referência ao contrato do Real Digital para validação de participantes.
+Reference to the Real Digital contract for participant validation.
 
 
 ### defaultAccount
@@ -28,7 +28,7 @@ Referência ao contrato do Real Digital para validação de participantes.
 mapping(uint256 => address) defaultAccount
 ```
 
-_Mapping_ das contas default. Chave é o CPNJ8 do participante.
+_Mapping_ of default accounts. Key is the participant's CNPJ8.
 
 
 ### onlyParticipant
@@ -37,7 +37,7 @@ _Mapping_ das contas default. Chave é o CPNJ8 do participante.
 modifier onlyParticipant()
 ```
 
-Modificador de método: somente participantes podem alterar suas carteiras _default_.
+Method modifier: only participants can change their default wallets.
 
 
 ### constructor
@@ -50,9 +50,9 @@ constructor(contract RealDigital token, address _authority, address _admin) publ
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| token | contract RealDigital | Endereço do Real Digital |
-| _authority | address | Autoridade do contrato. Adiciona carteiras default |
-| _admin | address | Administrador do contrato. Permite trocar a autoridade |
+| token | contract RealDigital | Real Digital address |
+| _authority | address | Contract authority. Adds default wallets |
+| _admin | address | Contract administrator. Allows changing the authority |
 
 
 
@@ -63,14 +63,14 @@ constructor(contract RealDigital token, address _authority, address _admin) publ
 function addDefaultAccount(uint256 cnpj8, address wallet) public
 ```
 
-Adiciona a primeira carteira _default_ para um participante. É permitido apenas para a autoridade.
+Adds the first default wallet for a participant. Allowed only for the authority.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| cnpj8 | uint256 | CNPJ8 do participante |
-| wallet | address | Carteira |
+| cnpj8 | uint256 | Participant's CNPJ8 |
+| wallet | address | Wallet |
 
 
 
@@ -81,12 +81,11 @@ Adiciona a primeira carteira _default_ para um participante. É permitido apenas
 function updateDefaultWallet(uint256 cnpj8, address newWallet) public
 ```
 
-Permite ao participante trocar sua carteira _default_. 
+Allows the participant to change their _default_ wallet.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| cnpj8 | uint256 | CNPJ8 do participante |
-| newWallet | address | Carteira |
-
+| cnpj8 | uint256 | Participant's CNPJ8 |
+| newWallet | address | Wallet |

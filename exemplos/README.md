@@ -1,19 +1,19 @@
-# Exemplos de interação com os _smart contracts_
+# Examples of interaction with smart contracts
 
-Aqui estão sendo disponibilizados alguns exemplos de interação com os contratos inteligentes, de maneira a guiar o desenvolvimento por parte dos participantes.
+Here are some examples of interaction with smart contracts, in order to guide the development by the participants.
 
-Os exemplos estarão escritos em Typescript usando o framework [Hardhat](https://hardhat.org/). Isso não é uma recomendação do uso da ferramenta por parte do Banco Central do Brasil. Os participantes são livres pra desenvolverem a interação com os contratos inteligentes da forma que bem entenderem.
+The examples will be written in Typescript using the [Hardhat](https://hardhat.org/) framework. This is not a recommendation for the use of the tool by the Central Bank of Brazil. Participants are free to develop interaction with smart contracts in any way they see fit.
 
-Esse código foi testado mas não foi feita nenhuma auditoria ou análise de vulnerabilidade. Não recomendamos o uso em produção, especialmente o uso de chaves privadas no arquivo de configuração do Hardhat.
+This code has been tested but no audit or vulnerability analysis has been performed. We do not recommend its use in production, especially the use of private keys in the Hardhat configuration file.
 
-[Exemplo 1](example1.ts):
+[Example 1](example1.ts):
     Enable Account / Mint and Burn.
 
-[Exemplo 2](example2.ts):
-    Buscar default account participant e realizar transaferencia de CBDC.
+[Example 2](example2.ts):
+    Get participant's default account and perform CBDC transfer.
 
-[Exemplo 3](example3.ts):
-    Participante ativando um endereço para um cliente e realizando uma emissão de DVt ou MEt.
+[Example 3](example3.ts):
+    Participant activating an address for a client and performing a DVt or MEt issuance.
 
 
-[<<< Voltar](../README.md)
+[<<< Back](../README.md)

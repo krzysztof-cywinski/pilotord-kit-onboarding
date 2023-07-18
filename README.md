@@ -1,9 +1,8 @@
-# Kit Onboarding - Piloto Real Digital
+# Kit Onboarding - Real Digital Pilot
 
-Este repositório contém as informações necessárias para a participação no piloto do Real Digital. A documentação será complementada conforme o _feedback_ dos participantes.
+This repository contains the necessary information for participating in the Real Digital pilot. The documentation will be complemented as per the feedback from the participants.
 
-
-* [Arquitetura do Piloto](arquitetura.md)
-* [Conexão com a rede do Real Digital](ingresso.md)
+* [Pilot Architecture](arquitetura.md)
+* [Connection to the Real Digital Network](ingresso.md)
 * [Smart Contracts](smartcontracts.md)
-* [Exemplos de interação com os smart contracts](exemplos/README.md)
+* [Examples of interaction with smart contracts](exemplos/README.md)
