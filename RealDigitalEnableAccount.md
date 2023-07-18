@@ -2,7 +2,7 @@
 
 ## RealDigitalEnableAccount
 
-Contrato que permite ao participante habilitar outras carteiras de sua propriedade.
+Contract that allows the participant to enable other wallets they own.
 
 
 
@@ -13,13 +13,13 @@ Contrato que permite ao participante habilitar outras carteiras de sua proprieda
 constructor(address accessControlAddress) public
 ```
 
-Constrói uma instância do contrato e armazena o endereço do contrato do RealDigital, responsável pelas verificações de controle de acesso.
+Builds an instance of the contract and stores the address of the RealDigital contract, responsible for access control checks.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| accessControlAddress | address | Endereço do contrato de controle de acesso |
+| accessControlAddress | address | Address of the access control contract |
 
 
 
@@ -30,13 +30,13 @@ Constrói uma instância do contrato e armazena o endereço do contrato do RealD
 function enableAccount(address member) public
 ```
 
-Habilita uma nova carteira para o participante. Qualquer carteira previamente habilitada para o participante pode habilitar outras carteiras.
+Enables a new wallet for the participant. Any wallet previously enabled for the participant can enable other wallets.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| member | address | Novo endereço do participante |
+| member | address | New participant address |
 
 
 
@@ -47,5 +47,4 @@ Habilita uma nova carteira para o participante. Qualquer carteira previamente ha
 function disableAccount() public
 ```
 
-Desabilita a própria carteira que executou a função.
-
+Disables the wallet that executed the function.

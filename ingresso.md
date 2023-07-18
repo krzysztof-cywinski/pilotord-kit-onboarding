@@ -1,81 +1,80 @@
-# Conexão com a rede do Real Digital
+# Connection to the Real Digital Network
 
-## Objetivo
+## Objective
 
-Esta documentação tem como objetivo estabelecer pré-requisitos de participação na rede do Real Digital e definir padrões de configuração para implantação do nó do participante nessa rede.
+This documentation aims to establish participation prerequisites in the Real Digital network and define configuration standards for deploying the participant node in this network.
 
-Por se tratar de um piloto em ambiente de testes, os padrões adotados poderão sofrer ajustes que serão refletidos na documentação apresentada.
+As it is a pilot in a test environment, the adopted standards may undergo adjustments that will be reflected in the presented documentation.
 
-## Pré-requisitos e premissas
+## Prerequisites and assumptions
 
-Para participar do piloto do Real Digital, são necessários os seguintes itens:
-* O participante deve alocar as equipes necessárias, com dimensionamento e qualificação técnica adequados à execução das configurações de seu nó  na rede.
-* O participante é responsável por disponibilizar e implantar infraestruturas de processamento, comunicação e segurança (hardwares e softwares) que suportarão o Piloto RD em sua ponta de atuação.
-* Cada participante poderá ter apenas 1 nó na rede e se conectará aos demais nós por meio da RSFN - Rede do Sistema Financeiro Nacional.
-  * Para esta comunicação do piloto, via RSFN, será necessário uma banda mínima disponível de 6Mbps a fim de evitar risco à operação normal dos demais serviços.
-  * Os links individuais de acesso à RSFN devem ter largura de banda mínima de 10Mbps, sendo necessário observar ainda a redundância prevista no [Manual de Redes do SFN](https://www.bcb.gov.br/estabilidadefinanceira/comunicacaodados).
-* O participante poderá ter nó apenas do tipo fullnode/RPC, não podendo ter nó do tipo validador ou bootnode.
-* A porta padrão do nó do participante é 30303 (TCP/UDP).
-* O acesso à RSFN deverá ter as seguintes portas (TCP/UDP) liberadas:
-   * IP nó participante:30303 <- IPs dos demais participantes e IPs do Bacen* ou RSFN; 
-   * IP nó participante -> IPs dos demais participantes e IPs do Bacen*:30000-30009 e 30303 ou RSFN:30000-30009 e 30303
-* *O participante que optar por liberação mais restritiva deverá solicitar ao Bacen listagem dos participantes da rede com respectivos blocos de endereço na RSFN.
-* Durante a vigência do Piloto RD, fica suspensa, exclusivamente para os participantes selecionados, a vedação de comunicação direta entre si estabelecida no item 1.5 do [Manual de Redes do SFN](https://www.bcb.gov.br/estabilidadefinanceira/comunicacaodados).
-* Os dados utilizados nos testes deverão ser fictícios e não devem ser armazenados ou replicados para ambientes computacionais alheios aos das instituições autorizadas conforme regulamentação vigente.
-* Testes de carga deverão ser previamente combinados e autorizados pelo Banco Central do Brasil.
+To participate in the Real Digital pilot, the following items are required:
+* The participant must allocate the necessary teams, with adequate sizing and technical qualification to execute the configurations of their node on the network.
+* The participant is responsible for making available and deploying processing, communication and security infrastructures (hardware and software) that will support the RD Pilot at its point of operation.
+* Each participant may have only 1 node on the network and will connect to the other nodes through the RSFN - National Financial System Network.
+  * For this pilot communication, via RSFN, a minimum available bandwidth of 6Mbps will be necessary in order to avoid risk to the normal operation of other services.
+  * The individual links for access to RSFN must have a minimum bandwidth of 10Mbps, and it is necessary to observe the redundancy provided in the [SFN Network Manual](https://www.bcb.gov.br/estabilidadefinanceira/comunicacaodados).
+* The participant may only have a fullnode/RPC node, and may not have a validator or bootnode node.
+* The participant node's default port is 30303 (TCP/UDP).
+* Access to RSFN must have the following ports (TCP/UDP) released:
+   * Participant node IP:30303 <- IPs of other participants and IPs of Bacen* or RSFN;
+   * Participant node IP -> IPs of other participants and IPs of Bacen*:30000-30009 and 30303 or RSFN:30000-30009 and 30303
+* *The participant who chooses a more restrictive release must request from Bacen a list of network participants with their respective address blocks on RSFN.
+* During the validity of the RD Pilot, the prohibition of direct communication between the selected participants established in item 1.5 of the [SFN Network Manual](https://www.bcb.gov.br/estabilidadefinanceira/comunicacaodados) is suspended exclusively for the selected participants.
+* The data used in the tests must be fictitious and must not be stored or replicated to computational environments other than those of authorized institutions in accordance with current regulations.
+* Load tests must be previously agreed and authorized by the Central Bank of Brazil.
 
 
-## Pré-instalação
-* Baixar a [coleção de scripts](https://www.postman.com/hyperledger/workspace/hyperledger-besu/overview) de chamadas das APIs do BESU via Postman. Os scripts são opcionais às validações por CLI
-* Como sugestão, a implantação do nó do participante poderá ser realizada utilizando os links abaixo:
+## Pre-installation
+* Download the [collection of scripts](https://www.postman.com/hyperledger/workspace/hyperledger-besu/overview) for calling the BESU APIs via Postman. The scripts are optional for CLI validations.
+* As a suggestion, the deployment of the participant node can be performed using the links below:
 
     - https://besu.hyperledger.org/private-networks/get-started/install/
 
-    - https://github.com/ConsenSys/quorum-kubernetes 
-    
+    - https://github.com/ConsenSys/quorum-kubernetes
+
     - https://besu.hyperledger.org/private-networks/tutorials/kubernetes/
-    
+
     - https://besu.hyperledger.org/private-networks/tutorials/azure/
 
-## Configuração do nó do participante
+## Participant node configuration
 
-Para implantar o nó do participante na rede piloto do Real Digital deverão ser utilizadas as seguintes configurações:
+To deploy the participant node on the Real Digital pilot network, the following configurations must be used:
 
-### Nome do nó do participante
+### Participant node name
 
-De forma a facilitar a identificação do nó do participante durante o piloto, estabeleceu-se o seguinte padrão para o nome do nó:
+In order to facilitate the identification of the participant node during the pilot, the following standard was established for the node name:
 
-**função-participante-sequencial >>> ex.: fullnode-bcb-1**
+**participant-function-sequential >>> ex.: fullnode-bcb-1**
 
-* função: papel do nó na rede. Os papéis podem ser: bootnode, validador ou fullnode. No caso dos participantes do piloto, será sempre **fullnode**
+* function: node role in the network. The roles can be: bootnode, validator or fullnode. In the case of pilot participants, it will always be **fullnode**
 
-* participante: identificador do participante. Exemplo: bcb, selic, etc
+* participant: participant identifier. Example: bcb, selic, etc.
 
-* sequencial: número sequencial (caso o participante tenha mais de nó)
-    
-Configurar o nome do nó do participante no parâmetro **identity** no arquivo config.toml ou na variável de ambiente BESU_IDENTITY.
-    - https://besu.hyperledger.org/public-networks/reference/cli/options#identity
+* sequential: sequential number (if the participant has more than one node)
 
-### Gênesis
+Configure the participant node name in the **identity** parameter in the config.toml file or in the BESU_IDENTITY environment variable.
+    - https://besu.hyperledger.org/stable/public-networks/reference/cli/options/#identity
 
-Considerar o arquivo [genesis.json](genesis.json), disponibilizado neste kit-onboarding, para realizar o _deploy_ do nó do participante.
-Importante que o arquivo genesis.json esteja sincronizado para se conectar à rede, pois, algumas informações não podem ser diferentes, como por exemplo:
+### Genesis
 
-* chainID (identificador da rede)
-* extraData (https://besu.hyperledger.org/private-networks/how-to/configure/consensus/qbft/#extra-data)
+Consider the [genesis.json](genesis.json) file, provided in this onboarding kit, to deploy the participant node.
+It is important that the genesis.json file is synchronized to connect to the network, as some information cannot be different, such as:
+
+* chainID (network identifier)
+* extraData (https://besu.hyperledger.org/stable/private-networks/how-to/configure/consensus/qbft/#extra-data)
 
 ### Config.toml
 
-Está disponível neste kit-onboarding um template do arquivo [config.toml](config.toml) para ser utilizado na configuração do nó do participante. Atentar para os parâmetros que devem ser customizados conforme o seu ambiente (`p2p-host`, `p2p-port` e `nat-method`). Consulte a [documentação](https://besu.hyperledger.org/public-networks/how-to/connect/specify-nat/#kubernetes) do Besu sobre como configurar esses parâmetros.
-
+A [config.toml](config.toml) file template is available in this onboarding kit to be used in the participant node configuration. Pay attention to the parameters that must be customized according to your environment (`p2p-host`, `p2p-port` and `nat-method`). Consult the [Besu documentation](https://besu.hyperledger.org/stable/public-networks/how-to/connect/specify-nat/#kubernetes) on how to configure these parameters.
 
 ### Discovery (Bootnode)
 
-O _discovery_ será efetuado de forma automática usando bootnodes. Através deles serão disponibilizados os endereços (enodes) dos participantes da rede para que o nó faça automaticamente a conexão com cada _peer_. Foram disponibilizados 4 bootnodes na rede para atender os requisitos mínimos de resiliência e disponibilidade.
+Discovery will be automatically performed using bootnodes. Through them, the addresses (enodes) of the network participants will be made available so that the node can automatically connect to each peer. Four bootnodes have been made available on the network to meet minimum resilience and availability requirements.
 
-Os quatro endereços (enodes) abaixo devem ser configurados no parâmetro (BESU_BOOTNODES), separados por vírgula, no arquivo de variáveis de ambiente do container BESU.
+The four enode addresses below must be configured in the (BESU_ENODE_BOOTNODES) parameter, separated by commas, in the environment variable file of the BESU container.
 
-    * Os enodes dos Bootnodes:
+    * Bootnode enodes:
         **validator-bcb-1**
             enode://6402a9957982b006576a9c52d259b1b0959ddb69c0a9661d3e605ca4f6efd567880ea42053a61c01524d64c66d4a419b097f400a16305e142b7350e67b803bf9@200.218.66.38:30004
 
@@ -87,62 +86,60 @@ Os quatro endereços (enodes) abaixo devem ser configurados no parâmetro (BESU_
 
         **validator-selic-02**
             enode://36af70abfecd5a9277e4825b69a835de34c1c225cfce45ad14ad95f61070eb20c94ab715ab15d040a5e5213c37c5fe873a4da86eaa87b9c9245f656ca967e95a@200.218.66.85:30303
-        
 
-Exemplo: 
-    BESU_BOOTNODES="enode://bootnode1@host:port,enode://bootnode2@host:port,enode://bootnode3@host:port,enode://bootnode4@host:port"
+Example:
+    BESU_ENODE_BOOTNODES="enode://bootnode1@host:port,enode://bootnode2@host:port,enode://bootnode3@host:port,enode://bootnode4@host:port"
 
-## Permissionamento do nó do participante na rede do piloto
+## Participant node permissioning on the pilot network
 
-O permissionamento na rede será efetuado, por meio de contrato, exclusivamente pelo Banco Central do Brasil, administrador da rede.
+The permissioning on the network will be carried out exclusively by the Central Bank of Brazil, the network administrator, through a contract.
 
-Para solicitar a permissão, siga os passos abaixo:
+To request permission, follow the steps below:
 
-* O enode a ser informado é composto pelo enodeID + host (IP RSFN) + port.
+* The enode to be informed is composed of the enodeID + host (IP RSFN) + port.
     - "enode://enodeID@host:port"
 
-* Para obter o enodeID sem precisar subir o nó do participante, execute o comando abaixo que extrai o enode, porém a informação vem sem os dados de IP e porta, que devem ser complementados pelo participante.
+* To obtain the enodeID without having to start the participant node, execute the command below that extracts the enode, but the information comes without the IP and port data, which must be completed by the participant.
 
-    - **comando:** _besu --data-path=Node-01/data/ public-key export-address_
+    - **command:** _besu --data-path=Node-01/data/ public-key export-address_
 
-    - A saída de comando virá assim:
+    - The command output will look like this:
     ```
     2023-07-04 18:02:04.180-03:00 | main | INFO  | KeyPairUtil | Loaded public key 0x46163abddb5beb0599e73e468c0a2927f53408f871beb8e41c09b38b7fed933d149de697e3f20c963135e75b6293b094ceea08600e59524751de0bdff8b3e0e4 from /nfs-server/hyperledger-des/springboot/besu/hyperledger-01/data/key 0x4ee291a08e09bde67cfcb279db9fe957b707b4a6
     ```
 
-    - no caso acima, o enode seria: enode://46163abddb5beb0599e73e468c0a2927f53408f871beb8e41c09b38b7fed933d149de697e3f20c963135e75b6293b094ceea08600e59524751de0bdff8b3e0e4@IP_RSFN:PORT
+    - In the example above, the enode would be: enode://0x46163abddb5beb0599e73e468c0a2927f53408f871beb8e41c09b38b7fed933d149de697e3f20c963135e75b6293b094ceea08600e59524751de0bdff8b3e0e4@IP_RSFN:PORT
 
-* Fornecer por email ao Banco Central do Brasil o _enode_ do nó do participante (obtido no passo anterior):
-    - e-mail: piloto.rd.tecnologia@bcb.gov.br 
-    - assunto: DEINF | Permissão de Nó na Rede | Participante: [nome do participante]
+* Provide the participant node's enode by email to the Central Bank of Brazil (obtained in the previous step):
+    - email: piloto.rd.tecnologia@bcb.gov.br
+    - subject: DEINF | Node Permission on the Network | Participant: [participant name]
 
-* Configurar os seguintes parâmetros no arquivo config.toml do nó do participante. O arquivo de exemplo já possui esses parâmetros.
+* Configure the following parameters in the participant node's config.toml file. The example file already has these parameters.
 
-    * Arquivo config.toml:
-    ```        
+    * config.toml file:
+    ```
     permissions-nodes-contract-enabled=true
     permissions-nodes-contract-address="0x0000000000000000000000000000000000009999"
     permissions-nodes-contract-version=2
     ```
 
-## Execução do nó do participante
+## Participant node execution
 
-Após realizar os passos acima, e receber a confirmação do Banco Central do Brasil sobre a autorização do nó, execute o nó do participante e verifique as seguintes informações:
+After completing the steps above and receiving confirmation from the Central Bank of Brazil regarding the node's authorization, run the participant node and check the following information:
 
-Para conferir se o nó subiu corretamente, verifique as seguintes informações:
+To check if the node has started correctly, verify the following information:
 
-* Caso esteja executando o nó em container, verifique se ele está com status healthy.
+* If running the node in a container, check if it is in a healthy status.
 
-* Realize um teste de conexão (telnet, nc, echo) no endereço e porta do seu nó.
-Importante realizar este teste na porta de _discovery_ tanto para o protocolo TCP quanto para o protocolo UDP.
+* Perform a connection test (telnet, nc, echo) on the address and port of your node. It is important to perform this test on the _discovery_ port for both the TCP and UDP protocols.
 
-* Verifique no log do nó se ele foi iniciado corretamente:
-    ``` 
+* Check the node log to see if it started correctly:
+    ```
     | main | INFO | FullSyncDownloader | Starting full sync.*
     | main | INFO | FullSyncTargetManager | Unable to find sync target. Currently checking 0 peers for usefulness*
     ```
 
-* Execute a API `NET\net_peerCount` para verificar em quantos peers o nó do participante se conectou. A quantidade de nós conectados ao seu nó vai depender da quantidade de nós que estão conectados na rede no momento. É esperado que o nó do participante conecte-se a mais de 1 nó na rede. O retorno da API será algo parecido:
+* Execute the `NET\net_peerCount` API to check how many peers the participant node has connected to. The number of nodes connected to your node will depend on the number of nodes connected to the network at the moment. It is expected that the participant node will connect to more than 1 node on the network. The API return will look like this:
 
 ```json
     {
@@ -151,11 +148,11 @@ Importante realizar este teste na porta de _discovery_ tanto para o protocolo TC
         "result": "0x7"
     }
 ```
-    
-* Execute a API `ADMIN\admin_peers` para verificar quais nós se conectaram. Quando se utiliza bootnodes na rede, o discovery deverá ocorrer de forma automática, portanto, nessa lista, você deverá encontrar os nós conectados ao nó do participante.  O retorno da API será algo parecido com o abaixo:
+
+* Execute the `ADMIN\admin_peers API` to check which nodes have connected. When using bootnodes on the network, discovery should occur automatically, so in this list, you should find the nodes connected to the participant node. The API return will look like this:
 
 ```json
-    {
+        {
         "jsonrpc": "2.0",
         "id": 1,
         "result": [
@@ -221,28 +218,28 @@ Importante realizar este teste na porta de _discovery_ tanto para o protocolo TC
     }
 ```
 
-## Conectividade com sucesso na rede
-    
-Se você conseguiu implantar o seu nó e ele conseguiu conectar nos peers que o bootnode disponibilizou, então bem-vindo à rede do piloto do Real Digital.
+## Successful network connectivity
 
-O próximo passo será validar o uso de smart contract e transações na rede.
+If you were able to deploy your node and it was able to connect to the peers that the bootnode provided, then welcome to the Real Digital pilot network.
 
-## Problemas comuns
+The next step will be to validate the use of smart contracts and transactions on the network.
 
-Possíveis problemas para o nó do participante NÃO se conectar à rede do piloto:
+## Common problems
 
-Verifique sua rede:
+Possible problems for the participant node NOT connecting to the pilot network:
 
-* Falta liberação no firewall dos endereços e portas;
-* Falta liberação no firewall da porta para o protocolo UDP;
-* Regras de NAT não configuradas corretamente;
+Check your network:
 
-Verifique o nó do participante:
+* Lack of release in the firewall of addresses and ports;
+* Lack of release in the firewall of the port for the UDP protocol;
+* NAT rules not configured correctly;
 
-* Permissonamento não concedido pelo administrador do contrato;
-* Implantar o nó sem expor as portas do container (TCP e UDP);
-* Genesis configurado errado (verificar extradata, chainId);
-* Apontamento para o enode errado do bootnodes;
+Check the participant node:
+
+* Permission not granted by the contract administrator;
+* Deploying the node without exposing the container ports (TCP and UDP);
+* Genesis configured incorrectly (check extradata, chainId);
+* Pointing to the wrong enode of the bootnodes;
 
 
-[<<< Voltar](README.md)
+[<<< Back](README.md)

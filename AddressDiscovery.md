@@ -2,7 +2,7 @@
 
 ## AddressDiscovery
 
-_Smart Contract_ utilitário para facilitar a descoberta dos demais endereços de contratos na rede do Piloto RD. Pode ser acessado a partir do endereço 0xDc2633B0cdA829bd2A54Db3Fd39b474aa0953c70.
+_Utility_ smart contract to facilitate the discovery of other contract addresses on the RD Pilot network. It can be accessed from the address 0xDc2633B0cdA829bd2A54Db3Fd39b474aa0953c70.
 
 ### ACCESS_ROLE
 
@@ -10,7 +10,7 @@ _Smart Contract_ utilitário para facilitar a descoberta dos demais endereços d
 bytes32 ACCESS_ROLE
 ```
 
-_Role_ de acesso, pertencente a autoridade do contrato.
+Access _role_, belonging to the contract authority.
 
 ### addressDiscovery
 
@@ -18,7 +18,7 @@ _Role_ de acesso, pertencente a autoridade do contrato.
 mapping(bytes32 => address) addressDiscovery
 ```
 
-_Mapping_ do endereço dos contratos, a chave é o hash keccak256 do nome do contrato.
+_Mapping_ of contract addresses, where the key is the keccak256 hash of the contract name.
 
 ### constructor
 
@@ -32,8 +32,8 @@ Construtor
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _authority | address | Autoridade do contrato, pode atualizar os endereços dos contratos. |
-| _admin | address | Administrador, pode trocar a autoridade. |
+| _authority | address | Contract authority, can update contract addresses. |
+| _admin | address | Administrator, can change the authority. |
 
 ### updateAddress
 
@@ -41,12 +41,11 @@ Construtor
 function updateAddress(bytes32 smartContract, address newAddress) public
 ```
 
-Atualiza o endereço de um contrato, permitido apenas para a autoridade (BCB).
+Updates the address of a contract, allowed only for the authority (BCB).
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| smartContract | bytes32 | Hash keccak256 do nome do contrato. |
-| newAddress | address | Novo endereço do contrato. |
-
+| smartContract | bytes32 | Keccak256 hash of the contract name. |
+| newAddress | address | New contract address. |

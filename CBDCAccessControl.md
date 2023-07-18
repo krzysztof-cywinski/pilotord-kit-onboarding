@@ -2,11 +2,11 @@
 
 ## CBDCAccessControl
 
-_Smart Contract_ responsável pela camada de controle de acesso para o Real Digital/Tokenizado.
+_Smart Contract_ responsible for the access control layer for Real Digital/Tokenized.
 
-Suas principais funcionalidades são:
-- Determinar quais carteiras podem enviar/receber tokens.
-- Controlar os papeis de qual endereço pode emitir/resgatar/congelar saldo de uma carteira.
+Its main features are:
+- Determine which wallets can send/receive tokens.
+- Control the roles of which address can issue/redeem/freeze a wallet's balance.
 
 ### PAUSER_ROLE
 
@@ -14,7 +14,7 @@ Suas principais funcionalidades são:
 bytes32 PAUSER_ROLE
 ```
 
-_Role_ que permite pausar o contrato.
+_Role_ that allows pausing the contract.
 
 ### MINTER_ROLE
 
@@ -22,7 +22,7 @@ _Role_ que permite pausar o contrato.
 bytes32 MINTER_ROLE
 ```
 
-_Role_ que permite fazer o `mint` nos contratos de token.
+_Role_ that allows `mint` on token contracts.
 
 ### ACCESS_ROLE
 
@@ -30,7 +30,7 @@ _Role_ que permite fazer o `mint` nos contratos de token.
 bytes32 ACCESS_ROLE
 ```
 
-_Role_ que permite habilitar um endereço.
+_Role_ that allows enabling an address.
 
 ### MOVER_ROLE
 
@@ -38,7 +38,7 @@ _Role_ que permite habilitar um endereço.
 bytes32 MOVER_ROLE
 ```
 
-_Role_ que permite acesso à função `move`, ou seja, transferir o token de outra carteira.
+_Role_ that allows access to the `move` function, that is, transfer the token from another wallet.
 
 ### BURNER_ROLE
 
@@ -46,7 +46,7 @@ _Role_ que permite acesso à função `move`, ou seja, transferir o token de out
 bytes32 BURNER_ROLE
 ```
 
-_Role_ que permite acesso à função `burn`.
+_Role_ that allows access to the `burn` function.
 
 ### FREEZER_ROLE
 
@@ -54,7 +54,7 @@ _Role_ que permite acesso à função `burn`.
 bytes32 FREEZER_ROLE
 ```
 
-_Role_ que permite bloquear saldo de uma carteira, por exemplo para o [_swap_ de dois passos](./SwapTwoSteps.md).
+_Role_ that allows freezing a wallet's balance, for example for the [two-step _swap_](./SwapTwoSteps.md).
 
 ### authorizedAccounts
 
@@ -62,7 +62,7 @@ _Role_ que permite bloquear saldo de uma carteira, por exemplo para o [_swap_ de
 mapping(address => bool) authorizedAccounts
 ```
 
-_Mapping_ das contas autorizadas a receber o token.
+_Mapping_ of authorized accounts to receive the token.
 
 ### EnabledAccount
 
@@ -70,13 +70,13 @@ _Mapping_ das contas autorizadas a receber o token.
 event EnabledAccount(address member)
 ```
 
-Evento de carteira habilitada.
+Event of an enabled wallet.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| member | address | Carteira habilitada |
+| member | address | Enabled wallet |
 
 ### DisabledAccount
 
@@ -84,13 +84,13 @@ Evento de carteira habilitada.
 event DisabledAccount(address member)
 ```
 
-Evento de carteira desabilitada.
+Event of a disabled wallet.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| member | address | Carteira desabilitada |
+| member | address | Disabled wallet |
 
 ### constructor
 
@@ -98,14 +98,14 @@ Evento de carteira desabilitada.
 constructor(address _authority, address _admin) internal
 ```
 
-Constrói uma instância da contrato, armazenando os argumentos informados.
+Builds an instance of the contract, storing the provided arguments.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _authority | address | Autoridade do contrato, pode fazer todas as operações com o token |
-| _admin | address | Administrador do contrato, pode trocar a autoridade do contrato caso seja necessário |
+| _authority | address | Authority of the contract, can perform all operations with the token |
+| _admin | address | Contract administrator, can change the authority of the contract if necessary |
 
 ### checkAccess
 
@@ -113,14 +113,14 @@ Constrói uma instância da contrato, armazenando os argumentos informados.
 modifier checkAccess(address from, address to)
 ```
 
-Modificador que checa se tanto o pagador quanto o recebedor estão habilitados a receber o token.
+Modifier that checks if both the payer and the receiver are authorized to receive the token.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| from | address | Carteira do pagador |
-| to | address | Carteira do recebedor |
+| from | address | Payer's wallet |
+| to | address | Receiver's wallet |
 
 ### enableAccount
 
@@ -128,13 +128,13 @@ Modificador que checa se tanto o pagador quanto o recebedor estão habilitados a
 function enableAccount(address member) public
 ```
 
-Habilita a carteira a receber o token.
+Enables the wallet to receive the token.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| member | address | Carteira a ser habilitada |
+| member | address | Wallet to be enabled |
 
 ### disableAccount
 
@@ -142,13 +142,13 @@ Habilita a carteira a receber o token.
 function disableAccount(address member) public
 ```
 
-Desabilita a carteira.
+Disables the wallet.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| member | address | Carteira a ser desabilitada |
+| member | address | Wallet to be disabled |
 
 ### verifyAccount
 
@@ -156,11 +156,10 @@ Desabilita a carteira.
 function verifyAccount(address account) public view virtual returns (bool)
 ```
 
-Checa se a carteira pode receber o token.
+Checks if the wallet can receive the token.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| account | address | Carteira a ser checada |
-
+| account | address | Wallet to be checked |

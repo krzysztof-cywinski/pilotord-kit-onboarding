@@ -2,19 +2,19 @@ import { ethers } from "hardhat";
 import abiRealDigital from '../abi/RealDigital.json';
 import abiRealDigitalDefaultAccount from '../abi/RealDigitalDefaultAccount.json';
 
-// Busca a conta padrão do participante e realiza transferêcia de CBDC
+// Function that searches for the default account of a participant and performs a CBDC transfer
 async function example2() {
-    const defaultAccount = await ethers.getContractAt(abiRealDigitalDefaultAccount, '<Endereço contrato RealDigitalDefaultAccount>');
-    const cbdc = await ethers.getContractAt(abiRealDigital, 'Endereço contrato RealDigital');
+    const defaultAccount = await ethers.getContractAt(abiRealDigitalDefaultAccount, '<RealDigitalDefaultAccount contract address>');
+    const cbdc = await ethers.getContractAt(abiRealDigital, '<RealDigital contract address>');
     const [, participantX] = await ethers.getSigners();
 
-    // Identificador do participante que vai receber a transferência
+    // Identifier of the participant that will receive the transfer
     const cnpj8AnotherParticipant = '87654321';
 
-    // Busca o endereço padrão para a transferência
+    // Searches for the default address for the transfer
     const address = await defaultAccount.defaultAccount(cnpj8AnotherParticipant);
 
-    // Realiza a transferência de CBDC
+    // Performs the CBDC transfer
     const response = await cbdc.connect(participantX).transfer(address, ethers.utils.parseUnits("100", 2));
 
     console.log(response.hash);

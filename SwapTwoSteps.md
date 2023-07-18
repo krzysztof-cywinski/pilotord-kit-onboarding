@@ -2,11 +2,11 @@
 
 ## SwapTwoSteps
 
-Este contrato implementa a troca de Real Tokenizado entre dois participantes distintos.
+This contract implements the exchange of Real Tokenizado between two distinct participants.
 
-A troca destrói Real Tokenizado do cliente pagador, transfere Real Digital do participante pagador para o participante recebedor e emite Real Tokenizado para o cliente recebedor.
+The exchange destroys Real Tokenizado from the paying client, transfers Real Digital from the paying participant to the receiving participant and emits Real Tokenizado to the receiving client.
 
-A operação de _swap_ implementada neste contrato é realizada em duas transações: uma de proposta e outra de aceite.
+The _swap_ operation implemented in this contract is performed in two transactions: one for proposal and another for acceptance.
 
 ### CBDC
 
@@ -14,30 +14,30 @@ A operação de _swap_ implementada neste contrato é realizada em duas transaç
 contract RealDigital CBDC
 ```
 
-Referência ao contrato para que seja efetuada a movimentação de Real Digital.
+Reference to the contract for the movement of Real Digital to be made.
 
 ### SwapStatus
 
 ```solidity
 enum SwapStatus {
-  PENDING,          // Operação de _swap_ registrada, pendente de cancelamento ou execução.
-  EXECUTED,         // Operação de _swap_ executada.
-  CANCELLED         // Operação de _swap_ cancelada.
+  PENDING,          // Swap operation registered, pending cancellation or execution.
+  EXECUTED,         // Swap operation executed.
+  CANCELLED         // Swap operation cancelled.
 }
 ```
 
-Enumeração com as possíveis situações de uma operação de _swap_.
+Enumeration with the possible situations of a swap operation.
 
 ### SwapProposal
 
 ```solidity
 struct SwapProposal {
-  contract RealTokenizado tokenSender;      // O endereço do contrato de Real Tokenizado do participante pagador
-  contract RealTokenizado tokenReceiver;    // O endereço do contrato de Real Tokenizado do participante recebedor
-  address sender;                           // O endereço da wallet do cliente pagador
-  address receiver;                         // O endereço da wallet do cliente recebedor
-  uint256 amount;                           // Quantidade de Reais a ser movimentada.
-  enum SwapTwoSteps.SwapStatus status;      // Situação atual da operação.
+  contract RealTokenizado tokenSender;      // The address of the Real Tokenizado contract of the paying participant
+  contract RealTokenizado tokenReceiver;    // The address of the Real Tokenizado contract of the receiving participant
+  address sender;                           // The address of the payer's wallet
+  address receiver;                         // The address of the receiver's wallet
+  uint256 amount;                           // Amount of Reais to be moved.
+  enum SwapTwoSteps.SwapStatus status;      // Current situation of the operation.
   uint256 timestamp;
 }
 ```
@@ -48,7 +48,7 @@ struct SwapProposal {
 mapping(uint256 => struct SwapTwoSteps.SwapProposal) swapProposals
 ```
 
-_Mapping_ de propostas de _swap_.
+_Mapping_ of _swap_ proposals.
 
 ### SwapStarted
 
@@ -56,18 +56,18 @@ _Mapping_ de propostas de _swap_.
 event SwapStarted(uint256 proposalId, uint256 senderNumber, uint256 receiverNumber, address sender, address receiver, uint256 amount)
 ```
 
-Evento de início do _swap_.
+_Swap_ start event.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| proposalId | uint256 | Id da proposta |
-| senderNumber | uint256 | CNPJ8 do pagador |
-| receiverNumber | uint256 | CNPJ8 do recebedor |
-| sender | address | Endereço do pagador |
-| receiver | address | Endereço do recebedor |
-| amount | uint256 | Valor |
+| proposalId | uint256 | Proposal ID |
+| senderNumber | uint256 | CNPJ8 of the payer |
+| receiverNumber | uint256 | CNPJ8 of the receiver |
+| sender | address | Payer's address |
+| receiver | address | Receiver's address |
+| amount | uint256 | Value |
 
 ### SwapExecuted
 
@@ -75,18 +75,18 @@ Evento de início do _swap_.
 event SwapExecuted(uint256 proposalId, uint256 senderNumber, uint256 receiverNumber, address sender, address receiver, uint256 amount)
 ```
 
-Evento de _swap_ executado.
+_Swap_ executed event.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| proposalId | uint256 | Id da proposta |
-| senderNumber | uint256 | CNPJ8 do pagador |
-| receiverNumber | uint256 | CNPJ8 do recebedor |
-| sender | address | Endereço do pagador |
-| receiver | address | Endereço do recebedor |
-| amount | uint256 | Valor |
+| proposalId | uint256 | Proposal ID |
+| senderNumber | uint256 | CNPJ8 of the payer |
+| receiverNumber | uint256 | CNPJ8 of the receiver |
+| sender | address | Payer's address |
+| receiver | address | Receiver's address |
+| amount | uint256 | Value |
 
 ### SwapCancelled
 
@@ -94,14 +94,14 @@ Evento de _swap_ executado.
 event SwapCancelled(uint256 proposalId, string reason)
 ```
 
-Evento de _swap_ cancelado.
+_Swap_ cancelled event.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| proposalId | uint256 | Id da proposta |
-| reason | string | Razão do cancelamento |
+| proposalId | uint256 | Proposal ID |
+| reason | string | Reason for cancellation |
 
 ### ExpiredProposal
 
@@ -109,13 +109,13 @@ Evento de _swap_ cancelado.
 event ExpiredProposal(uint256 proposalId)
 ```
 
-Evento de proposta expirada. A proposta expira em 1 minuto.
+Expired proposal event. The proposal expires in 1 minute.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| proposalId | uint256 | Id da proposta |
+| proposalId | uint256 | Proposal ID |
 
 ### constructor
 
@@ -123,13 +123,13 @@ Evento de proposta expirada. A proposta expira em 1 minuto.
 constructor(contract RealDigital _CBDC) public
 ```
 
-Construtor
+Construtor.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _CBDC | contract RealDigital | Endereço do contrato do Real Digital |
+| _CBDC | contract RealDigital | Address of the Real Digital contract |
 
 ### startSwap
 
@@ -137,16 +137,16 @@ Construtor
 function startSwap(contract RealTokenizado tokenSender, contract RealTokenizado tokenReceiver, address receiver, uint256 amount) public
 ```
 
-Cria a proposta de _swap_.
+Creates the _swap_ proposal.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| tokenSender | contract RealTokenizado | Endereço do contrato de Real Tokenizado do pagador |
-| tokenReceiver | contract RealTokenizado | Endereço do contrato de Real Tokenizado do recebedor |
-| receiver | address | Endereço do cliente recebedor |
-| amount | uint256 | Valor |
+| tokenSender | contract RealTokenizado | Address of the Real Tokenizado contract of the payer |
+| tokenReceiver | contract RealTokenizado | Address of the Real Tokenizado contract of the receiver |
+| receiver | address | Address of the receiving client |
+| amount | uint256 | Value |
 
 ### executeSwap
 
@@ -154,13 +154,13 @@ Cria a proposta de _swap_.
 function executeSwap(uint256 proposalId) public
 ```
 
-Aceita a proposta de _swap_, executável apenas pelo recebedor.
+Accepts the _swap_ proposal, executable only by the receiver.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| proposalId | uint256 | Id da proposta |
+| proposalId | uint256 | Proposal ID |
 
 ### cancelSwap
 
@@ -168,12 +168,11 @@ Aceita a proposta de _swap_, executável apenas pelo recebedor.
 function cancelSwap(uint256 proposalId, string reason) public
 ```
 
-Cancela a proposta. Pode ser executada tanto pelo pagador quanto pelo recebedor.
+Cancels the proposal. Can be executed by both the payer and the receiver.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| proposalId | uint256 | Id da proposta |
-| reason | string | Razão do cancelamento |
-
+| proposalId | uint256 | Proposal ID |
+| reason | string | Reason for cancellation |

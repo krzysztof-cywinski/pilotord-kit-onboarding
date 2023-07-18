@@ -1,95 +1,93 @@
-# Interação com os _smart contracts_
+# Interaction with smart contracts
 
-## Objetivo
+## Objective
 
-Esta documentação tem como objetivo explicar como será feita a interação com os _smart contracts_ que estão disponíveis na Rede do Piloto do Real Digital.
+This documentation aims to explain how interaction with the smart contracts available on the Real Digital Pilot Network will be done.
 
-Por se tratar de um piloto em ambiente de testes, esta documentação está sujeita a constantes evoluções que serão aqui refletidas.
+As this is a pilot in a test environment, this documentation is subject to constant evolutions that will be reflected here.
 
-Serão fornecidos ao participante do piloto a [ABI](https://docs.soliditylang.org/en/v0.8.20/abi-spec.html) de cada um dos contratos e seus respectivos endereços publicados na rede. Cada participante deve implementar, da forma que melhor entender, a sua interação com os contratos, fazendo uso de bibliotecas padrão Web3 como, por exemplo, o [Web3JS](https://web3js.readthedocs.io/en/v1.10.0/), [Web3J](https://docs.web3j.io/4.10.0/), ou frameworks como o [Hardhat](https://hardhat.org/) ou [Truffle](https://trufflesuite.com/).
+The participant of the pilot will be provided with the ABI of each of the contracts and their respective addresses published on the network. Each participant must implement, in the way that best understands, their interaction with the contracts, making use of standard Web3 libraries such as, for example, [Web3JS](https://web3js.readthedocs.io/en/v1.10.0/), [Web3J](https://docs.web3j.io/4.10.0/), or frameworks such as [Hardhat](https://hardhat.org/) or [Truffle](https://trufflesuite.com/).
 
-No piloto, todos os contratos serão implementados e publicados na rede pelo Banco Central do Brasil.
+In the pilot, all contracts will be implemented and published on the network by the Central Bank of Brazil.
 
 ## Smart Contracts
 
-Os contratos que representam tokens (Real Digital e Real Tokenizado) foram desenvolvidos usando como base o padrão [ERC20](https://ethereum.org/pt/developers/docs/standards/tokens/erc-20/), com a adição de [funções específicas de controle de acesso](./CBDCAccessControl.md). 
-Todos os tokens suportam 2 casas decimais.
+The contracts that represent tokens (Real Digital and Tokenized Real) were developed using the [ERC20](https://ethereum.org/pt/developers/docs/standards/tokens/erc-20/) standard as a basis, with the addition of [specific access control functions](./CBDCAccessControl.md).
+All tokens support 2 decimal places.
 
-Os contratos das operações (liquidação de oferta pública e compra e venda) que envolvem TPFt foram desenvolvidos usando como base o padrão [ERC1155](https://ethereum.org/pt/developers/docs/standards/tokens/erc-1155/), com a adição de [funções específicas de controle de acesso](./TPFtAccessControl.md). 
+The contracts for operations (public offering settlement and buying and selling) involving TPFt were developed using the [ERC1155](https://ethereum.org/pt/developers/docs/standards/tokens/erc-1155/) standard as a basis, with the addition of specific [access control functions]](./TPFtAccessControl.md).
 
-Uma operação será identificada unicamente pelo operationId informado pelo participante. Este número será único na rede e sugere-se que seja utilizado o número da faixa do participante concatenado com a data vigente. Este formato não será validado e o operationId será utilizado para realizar a correspondência de uma operação de duplo comando.
+An operation will be uniquely identified by the operationId provided by the participant. This number will be unique on the network and it is suggested to use the participant's range number concatenated with the current date. This format will not be validated and the operationId will be used to match a double command operation.
 
-Os valores de preço unitário, quantidade e valor financeiro serão tratados nos contratos assumindo os últimos algarismos como casas decimais de acordo com cada tipo de atributo. Caso o atributo seja um inteiro, deve ser preenchido o número de casas decimais com zero nos últimos algarismos.
+The unit price, quantity, and financial value will be treated in the contracts assuming the last digits as decimal places according to each attribute type. If the attribute is an integer, the number of decimal places must be filled with zeros in the last digits.
 
 ### CBDC - [Real Digital](./RealDigital.md)
 
-O CBDC (Central Bank Digital Currency) está definido no contrato chamado [RealDigital](./abi/RealDigital.json). 
-* A carteira do Banco Central do Brasil é a gestora do token.
-* O símbolo do token é `BRL`.
-* Somente carteiras autorizadas podem receber Real Digital. 
-* Cada participante deve mandar ao Banco Central do Brasil o endereço da sua carteira principal para o cadastro. Esta carteira será a carteira _default_ do participante. Após o cadastro inicial, o próprio participante poderá habilitar outras carteiras a receber Real Digital, bem como alterar sua carteira _default_.
+The CBDC (Central Bank Digital Currency) is defined in the contract called [RealDigital](./abi/RealDigital.json).
+* The wallet of the Central Bank of Brazil is the token manager.
+* The token symbol is `BRL`.
+* Only authorized wallets can receive Real Digital.
+* Each participant must send the address of their main wallet to the Central Bank of Brazil for registration. This wallet will be the participant's default wallet. After the initial registration, the participant can enable other wallets to receive Real Digital, as well as change their default wallet.
 
-A carteira default será usada principalmente nos contratos de _swap_, detalhados abaixo.
+The default wallet will be mainly used in the swap contracts, detailed below.
 
-### DVt (Depósito bancário à vista tokenizado) e MEt (Moeda eletrônica tokenizada) - [Real Tokenizado](./RealTokenizado.md)
+### DVt (Tokenized Sight Deposit) and MEt (Tokenized Electronic Currency) - [Tokenized Real](./RealTokenizado.md)
 
-O Real Tokenizado está definido no contrato chamado [RealTokenizado](./abi/RealTokenizado.json). 
-* A carteira default do participante será a gestora do token, porém a criação do token na rede será feita pelo Banco Central do Brasil. 
-* O símbolo do token a definir.
-* Assim como o Real Digital, somente carteiras autorizadas podem receber Real Tokenizado. 
-* O participante deve utilizar dos métodos `enableAccount` e `disableAccount` para gerenciar as carteiras permitidas.
+Tokenized Real is defined in the contract called [RealTokenizado](./abi/RealTokenizado.json).
+* The participant's default wallet will be the token manager, but the creation of the token on the network will be done by the Central Bank of Brazil.
+* The token symbol is to be defined.
+* Like Real Digital, only authorized wallets can receive Tokenized Real.
+* The participant must use the `enableAccount` and `disableAccount` methods to manage the allowed wallets.
 
 ### [STR](./STR.md)
 
-O contrato chamado [STR](./abi/STR.json) representa a forma como os participantes solicitarão Real Digital ao Banco Central do Brasil. Esse contrato permite que qualquer participante solicite o _mint_ de Real Digital, desde que sua carteira esteja cadastrada, usando o método `requestToMint`.
-
+The contract called [STR](./abi/STR.json) represents how participants will request Real Digital from the Central Bank of Brazil. This contract allows any participant to request the minting of Real Digital, provided that their wallet is registered, using the `requestToMint` method.
 
 ### [Real Digital Default Account](./RealDigitalDefaultAccount.md)
 
-O contrato [RealDigitalDefaulAccount](./abi/RealDigitalDefaultAccount.json) permite ao participante trocar a sua carteira _default_, através do método `updateDefaultWallet`. Ainda, através do _mapping_ `defaultAccount`, é possível recuperar a carteira _default_ dos outros participantes, bastando passar como parâmetro o CNPJ8 da mesma. Essa operação será necessária para as transações de _swap_.
+The [RealDigitalDefaulAccount](./abi/RealDigitalDefaultAccount.json) contract allows the participant to change their default wallet through the `updateDefaultWallet` method. Also, through the `defaultAccount` mapping, it is possible to recover the default wallet of other participants, simply by passing their CNPJ8 as a parameter. This operation will be necessary for swap transactions.
 
 ### [Real Digital Enable Account](./RealDigitalEnableAccount.md)
 
-O contrato [RealDigitalEnableAccount](./abi/RealDigitalEnableAccount.json) permite ao participante habilitar outras carteiras de sua posse para receber Real Digital, através do método `enableAccount`.
+The [RealDigitalEnableAccount](./abi/RealDigitalEnableAccount.json) contract allows the participant to enable other wallets they own to receive Real Digital, through the `enableAccount` method.
 
 ### [KeyDictionary](./KeyDictionary.md)
 
-O contrato [KeyDictionary](./abi/KeyDictionary.json) simulará um DICT para o Real Digital. Durante o piloto os dados de clientes, fictícios, devem ser inseridos na rede para recuperação durante as operações de _swap_. 
-O método a ser invocado para a inserção de dados é o `addAccount`, que tem os seguintes parâmetros:
+The [KeyDictionary](./abi/KeyDictionary.json) contract simulates a DICT for Real Digital. During the pilot, fictitious client data must be inserted into the network for recovery during swap operations.
+The method to be invoked for data insertion is `addAccount`, which has the following parameters:
 
-* Chave, identificador unico gerado pelo participante, deve ser salvo no formato hash keccak256
-* CPF do cliente fictício
-* Código do participante
-* Conta do cliente fictício
-* Agência do cliente fictício
-* Carteira do cliente fictício
+* Key, a unique identifier generated by the participant, must be saved in keccak256 hash format
+* CPF of the fictitious client
+* Participant code
+* Fictitious client account
+* Fictitious client
 
-### TPFt – Título Público Federal tokenizado
+### TPFt – Tokenized Federal Public Debt
 
-O TPFt está definido em um contrato privado e de gestão do Selic.
+TPFt is defined in a private contract managed by Selic.
 
-- O TPFt é fungível e identificado pelo seu código, sigla e data vencimento.
-- A carteira da Secretaria do Tesouro Nacional (STN) é a gestora do token.
-- Somente carteiras autorizadas podem receber TPFt.
-- Os tokens disponibilizados seguirão as [características dos Títulos Públicos Federais](https://www.bcb.gov.br/content/estabilidadefinanceira/selic/CaracteristicaTitulos.pdf).
+- TPFt is fungible and identified by its code, acronym, and maturity date.
+- The wallet of the National Treasury Secretariat (STN) is the token manager.
+- Only authorized wallets can receive TPFt.
+- The tokens made available will follow the [characteristics of Federal Public Debt Securities](https://www.bcb.gov.br/content/estabilidadefinanceira/selic/CaracteristicaTitulos.pdf).
 
-### Liquidação de oferta pública - [Operação 1002](./ITPFtOperation1002.md)
+### Public Offering Settlement - [Operation 1002](./ITPFtOperation1002.md)
 
-A liquidação de oferta pública está definida no contrato chamado TPFtOperation1002 que implementa a interface [ITPFtOperation1002](./abi/ITPFtOperation1002.json). O contrato permite transferir quantidades inteiras de TPFt da carteira _default_ da STN para a carteira _default_ de um participante cadastrado por meio do método `auctionPlacement`. A liquidação da operação é realizada com a entrega contra pagamento (DvP) e somente o Bacen pode transmitir o comando cedente dessa operação.
+The public offering settlement is defined in the contract called TPFtOperation1002, which implements the interface [ITPFtOperation1002](./abi/ITPFtOperation1002.json). The contract allows the transfer of whole quantities of TPFt from the STN's default wallet to the default wallet of a registered participant through the `auctionPlacement` method. The settlement of the operation is carried out with delivery versus payment (DvP), and only the Central Bank of Brazil can transmit the seller's command of this operation.
 
-### Compra e venda - [Operação 1052](./ITPFtOperation1052.md)
+### Buying and Selling - [Operation 1052](./ITPFtOperation1052.md)
 
-A operação de compra e venda entre participantes e/ou clientes está definida no contrato chamado TPFtOperation1052 que implementa a interface [ITPFtOperation1052](./abi/ITPFtOperation1052.json). O contrato permite transferir quantidades fracionárias de TPFt entre carteiras de participantes e/ou clientes cadastrados por meio do método `trade`. A liquidação da operação é executada com a entrega contra pagamento (DvP).
+The buying and selling operation between participants and/or clients is defined in the contract called TPFtOperation1052, which implements the interface [ITPFtOperation1052](./abi/ITPFtOperation1052.json). The contract allows the transfer of fractional quantities of TPFt between wallets of registered participants and/or clients through the `trade` method. The settlement of the operation is executed with delivery versus payment (DvP).
 
-## Swap e comunicação Off-Chain
+## Swap and Off-Chain Communication
 
-Os contratos de _swap_ permitem a troca de Real Tokenizado entre os participantes, usando Real Digital como reserva. 
+The swap contracts allow the exchange of Tokenized Real between participants, using Real Digital as a reserve.
 
-No momento há duas implementações disponíveis: uma que executa o _swap_ em apenas [uma transação](./abi/SwapOneStep.json) e outro que depende da [aprovação do recebedor](./abi/SwapTwoSteps.json) para a troca seja concluída, exigindo assim duas transações na rede.
+At the moment, there are two available implementations: one that executes the swap in just [one transaction](./abi/SwapOneStep.json) and another that depends on the [receiver's approval](./abi/SwapTwoSteps.json) for the exchange to be completed, thus requiring two transactions on the network.
 
-Para mais detalhes leia a documentação dos contratos [SwapOneStep](./SwapOneStep.md) e [SwapTwoSteps](./SwapTwoSteps.md)
+For more details, read the documentation of the [SwapOneStep](./SwapOneStep.md) and [SwapTwoSteps](./SwapTwoSteps.md) contracts.
 
-O objetivo do piloto é testar as duas formas de _swap_, além de uma terceira que ainda será implementada e que envolve troca de informações _off-chain_.
+The objective of the pilot is to test the two forms of swap, as well as a third that will still be implemented and involves off-chain information exchange.
 
 
-[<<< Voltar](README.md)
+[<<< Back](README.md)

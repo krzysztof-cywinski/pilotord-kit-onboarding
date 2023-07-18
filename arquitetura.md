@@ -1,50 +1,50 @@
-# Arquitetura do piloto do Real Digital
+# Real Digital Pilot Architecture
 
-## Objetivo
+## Objective
 
-Esta documentação tem como objetivo apresentar a arquitetura definida para o piloto do Real Digital.
+This documentation aims to present the architecture defined for the Real Digital pilot.
 
-Por se tratar de um piloto em ambiente de testes, a arquitetura apresentada está sujeita a constantes evoluções que serão refletidas na documentação apresentada.
+As it is a pilot in a test environment, the presented architecture is subject to constant evolutions that will be reflected in the presented documentation.
 
-## Hyperledger Besu para redes privadas
+## Hyperledger Besu for private networks
 
-**Versão do Hyperledger Besu** utilizada na rede do piloto do Real Digital:
+**Hyperledger Besu version** used in the Real Digital pilot network:
     [23.4.1](https://github.com/hyperledger/besu/releases/tag/23.4.1).
 
-Para uso de versões superiores, a compatibilidade deve ser verificada com a equipe de desenvolvimento do piloto. Ao longo do projeto poderão ser testadas atualizações de versões.
+For use of higher versions, compatibility must be verified with the pilot development team. Throughout the project, version updates may be tested.
 
-**Consenso** utilizado na rede do piloto do Real Digital:
-    [QBFT](https://besu.hyperledger.org/private-networks/how-to/configure/consensus/qbft/)
+**Consensus** used in the Real Digital pilot network:
+    [QBFT](https://besu.hyperledger.org/stable/private-networks/how-to/configure/consensus/qbft/)
 
-**Permissionamento** do nó do participante na rede:
-    A permissão é realizada [onchain](https://besu.hyperledger.org/private-networks/concepts/permissioning/onchain/#permissioning-contracts) pelo Banco Central do Brasil. Mais detalhes no passo de [conexão com a rede](ingresso.md).
+**Participant node permissioning** on the network:
+    Permissioning is performed [onchain](https://besu.hyperledger.org/stable/private-networks/concepts/permissioning/onchain/#permissioning-contracts) by the Central Bank of Brazil. More details in the [network connection](ingresso.md) step.
 
-Será utilizada a [versão 2](https://besu.hyperledger.org/private-networks/how-to/use-permissioning/onchain/#specify-the-permissioning-contract-interface-version) do contract interface para o permissionamento **(permissions-nodes-contract-version)**.
+The [version 2](https://besu.hyperledger.org/stable/private-networks/how-to/use-permissioning/onchain/#specify-the-permissioning-contract-interface-version) of the contract interface will be used for permissioning **(permissions-nodes-contract-version)**.
 
-## Topologia
+## Topology
 
-A imagem abaixo mostra a arquitetura inicial proposta para a rede do piloto do Real Digital.
-
-&nbsp;
-
-![Topologia](topologia.png "Arquitetura do piloto da rede do real digital")
+The image below shows the proposed initial architecture for the Real Digital pilot network.
 
 &nbsp;
 
-- A comunicação entre os nós da rede se dá por meio da RSFN.
+![Topology](topologia.png "Real Digital network pilot architecture")
 
-- Cada participante do piloto, à exceção do Banco Central do Brasil, possui um único nó na rede.
+&nbsp;
 
-- De forma a garantir disponibilidade e resiliência à rede foram disponibilizados:
-  - no Banco Central do Brasil (Brasília): 4 validadores e 2 fullnodes, implantados em sites diferentes.
-  - no Banco Central do Brasil (RJ, Selic - infraestrutura apartada): 2 validadores e 2 fullnodes, implantados em sites diferentes.
+- Communication between network nodes is done through RSFN.
 
-- Todo tráfego que passará na RSFN será P2P (TCP/UDP).
+- Each pilot participant, with the exception of the Central Bank of Brazil, has a single node on the network.
 
-- Não haverá tráfego RPC na RSFN, ou seja, as portas RPCs devem ser liberadas apenas no âmbito de cada participante para acesso ao seu próprio nó.
+- In order to guarantee availability and resilience to the network, the following were made available:
+  - at the Central Bank of Brazil (Brasília): 4 validators and 2 fullnodes, deployed in different sites.
+  - at the Central Bank of Brazil (RJ, Selic - separate infrastructure): 2 validators and 2 fullnodes, deployed in different sites.
 
-- As portas RPC não devem estar abertas na rede e recomenda-se que, mesmo na rede interna, seja configurado controle de acesso por firewall e por autenticação.
+- All traffic that will pass through RSFN will be P2P (TCP/UDP).
 
-- Não é necessário configurar um DNS para o nó do participante.
+- There will be no RPC traffic on RSFN, that is, RPC ports should only be released within each participant's scope for access to their own node.
 
-[<<< Voltar](README.md)
+- RPC ports should not be open on the network and it is recommended that, even on the internal network, access control be configured by firewall and authentication.
+
+- It is not necessary to configure a DNS for the participant node.
+
+[<<< Back](README.md)
