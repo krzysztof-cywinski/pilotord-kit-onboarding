@@ -72,7 +72,7 @@ A [config.toml](config.toml) file template is available in this onboarding kit t
 
 Discovery will be automatically performed using bootnodes. Through them, the addresses (enodes) of the network participants will be made available so that the node can automatically connect to each peer. Four bootnodes have been made available on the network to meet minimum resilience and availability requirements.
 
-The four enode addresses below must be configured in the (BESU_ENODE_BOOTNODES) parameter, separated by commas, in the environment variable file of the BESU container.
+The four enode addresses below must be configured in the (BESU_BOOTNODES) parameter, separated by commas, in the environment variable file of the BESU container.
 
     * Bootnode enodes:
         **validator-bcb-1**
@@ -88,7 +88,7 @@ The four enode addresses below must be configured in the (BESU_ENODE_BOOTNODES) 
             enode://36af70abfecd5a9277e4825b69a835de34c1c225cfce45ad14ad95f61070eb20c94ab715ab15d040a5e5213c37c5fe873a4da86eaa87b9c9245f656ca967e95a@200.218.66.85:30303
 
 Example:
-    BESU_ENODE_BOOTNODES="enode://bootnode1@host:port,enode://bootnode2@host:port,enode://bootnode3@host:port,enode://bootnode4@host:port"
+    BESU_BOOTNODES="enode://bootnode1@host:port,enode://bootnode2@host:port,enode://bootnode3@host:port,enode://bootnode4@host:port"
 
 ## Participant node permissioning on the pilot network
 
@@ -108,7 +108,7 @@ To request permission, follow the steps below:
     2023-07-04 18:02:04.180-03:00 | main | INFO  | KeyPairUtil | Loaded public key 0x46163abddb5beb0599e73e468c0a2927f53408f871beb8e41c09b38b7fed933d149de697e3f20c963135e75b6293b094ceea08600e59524751de0bdff8b3e0e4 from /nfs-server/hyperledger-des/springboot/besu/hyperledger-01/data/key 0x4ee291a08e09bde67cfcb279db9fe957b707b4a6
     ```
 
-    - In the example above, the enode would be: enode://0x46163abddb5beb0599e73e468c0a2927f53408f871beb8e41c09b38b7fed933d149de697e3f20c963135e75b6293b094ceea08600e59524751de0bdff8b3e0e4@IP_RSFN:PORT
+    - In the example above, the enode would be: enode://46163abddb5beb0599e73e468c0a2927f53408f871beb8e41c09b38b7fed933d149de697e3f20c963135e75b6293b094ceea08600e59524751de0bdff8b3e0e4@IP_RSFN:PORT
 
 * Provide the participant node's enode by email to the Central Bank of Brazil (obtained in the previous step):
     - email: piloto.rd.tecnologia@bcb.gov.br
