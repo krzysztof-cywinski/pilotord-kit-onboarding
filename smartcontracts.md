@@ -15,7 +15,7 @@ In the pilot, all contracts will be implemented and published on the network by 
 The contracts that represent tokens (Real Digital and Tokenized Real) were developed using the [ERC20](https://ethereum.org/pt/developers/docs/standards/tokens/erc-20/) standard as a basis, with the addition of [specific access control functions](./CBDCAccessControl.md).
 All tokens support 2 decimal places.
 
-The contracts for operations (public offering settlement and buying and selling) involving TPFt were developed using the [ERC1155](https://ethereum.org/pt/developers/docs/standards/tokens/erc-1155/) standard as a basis, with the addition of specific [access control functions]](./TPFtAccessControl.md).
+The contracts for operations (public offering settlement and buying and selling) involving TPFt were developed using the [ERC1155](https://ethereum.org/pt/developers/docs/standards/tokens/erc-1155/) standard as a basis, with the addition of specific [access control functions](./TPFtAccessControl.md).
 
 An operation will be uniquely identified by the operationId provided by the participant. This number will be unique on the network and it is suggested to use the participant's range number concatenated with the current date. This format will not be validated and the operationId will be used to match a double command operation.
 
