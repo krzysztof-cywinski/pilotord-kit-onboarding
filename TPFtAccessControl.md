@@ -2,11 +2,11 @@
 
 ## TPFtAccessControl
 
-_Smart Contract_ responsável pela camada de controle de acesso para as operações envolvendo Título Público Federal tokenizado (TPFt).
+_Smart Contract_ responsible for the access control layer for operations involving tokenized Federal Public Title (TPFt).
 
-Suas principais funcionalidades são:
-- Determinar quais carteiras podem criar e emitir TPFt,
-- Controlar quais carteiras tem acesso as operações envolvendo TPFt.
+Its main features are:
+- Determine which wallets can create and issue TPFt,
+- Control which wallets have access to operations involving TPFt.
 
 ### MINTER_ROLE
 
@@ -14,7 +14,7 @@ Suas principais funcionalidades são:
 bytes32 MINTER_ROLE
 ```
 
-_Role_ que permite criar e emitir TPFt.
+_Role_ that allows creating and issuing TPFt.
 
 ### DIRECT_PLACEMENT_ROLE
 
@@ -22,7 +22,7 @@ _Role_ que permite criar e emitir TPFt.
 bytes32 DIRECT_PLACEMENT_ROLE
 ```
 
-_Role_ que permite realizar a operação de colocação direta.
+_Role_ that allows performing the direct placement operation.
 
 ### AUCTION_PLACEMENT_ROLE
 
@@ -30,7 +30,7 @@ _Role_ que permite realizar a operação de colocação direta.
 bytes32 AUCTION_PLACEMENT_ROLE
 ```
 
-_Role_ que permite realizar a liquidação de oferta pública.
+_Role_ that allows performing the public offering settlement operation.
 
 ### FREEZER_ROLE
 
@@ -38,7 +38,7 @@ _Role_ que permite realizar a liquidação de oferta pública.
 bytes32 FREEZER_ROLE
 ```
 
-_Role_ que permite bloquear saldo de uma carteira.
+_Role_ that allows locking the balance of a wallet.
 
 ### constructor
 
@@ -46,8 +46,7 @@ _Role_ que permite bloquear saldo de uma carteira.
 constructor() public
 ```
 
-Constrói uma instância do contrato e permite a carteira conceder ou revogar 
-as roles para os participantes.
+Builds an instance of the contract and allows the wallet to grant or revoke roles for participants.
 
 ### allowTPFtMint
 
@@ -55,13 +54,13 @@ as roles para os participantes.
 function allowTPFtMint(address member) public
 ```
 
-Habilita a carteira a criar e emitir TPFt.
+Enables the wallet to create and issue TPFt.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| member | address | Carteira a ser habilitada |
+| member | address | Wallet to be enabled |
 
 ### allowDirectPlacement
 
@@ -69,13 +68,13 @@ Habilita a carteira a criar e emitir TPFt.
 function allowDirectPlacement(address member) public
 ```
 
-Habilita a carteira a realizar a operação de colocação direta envolvendo TPFt.
+Enables the wallet to perform the direct placement operation involving TPFt.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| member | address | Carteira a ser habilitada |
+| member | address | Wallet to be enabled |
 
 ### allowAuctionPlacement
 
@@ -83,13 +82,13 @@ Habilita a carteira a realizar a operação de colocação direta envolvendo TPF
 function allowAuctionPlacement(address member) public
 ```
 
-Habilita a carteira a realizar a liquidação de oferta pública envolvendo TPFt.
+Enables the wallet to perform the public offering settlement operation involving TPFt.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| member | address | Carteira a ser habilitada |
+| member | address | Wallet to be enabled |
 
 ### allowFreezingPlacement
 
@@ -97,13 +96,13 @@ Habilita a carteira a realizar a liquidação de oferta pública envolvendo TPFt
 function allowFreezingPlacement(address member) public
 ```
 
-Habilita a carteira a bloquear e desbloquear saldo de ativos.
+Enables the wallet to lock and unlock asset balances.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| member | address | Carteira a ser habilitada |
+| member | address | Wallet to be enabled |
 
 ### enableAddress
 
@@ -111,13 +110,13 @@ Habilita a carteira a bloquear e desbloquear saldo de ativos.
 function enableAddress(address member) public
 ```
 
-Habilita a carteira a operar no piloto Real Digital Selic.
+Enables the wallet to operate in the Real Digital Selic pilot.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| member | address | Carteira a ser habilitada |
+| member | address | Wallet to be enabled |
 
 ### disableAddress
 
@@ -125,13 +124,13 @@ Habilita a carteira a operar no piloto Real Digital Selic.
 function disableAddress(address member) public
 ```
 
-Desabilita a carteira a operar no piloto Real Digital Selic.
+Disables the wallet to operate in the Real Digital Selic pilot.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| member | address | Carteira a ser desabilita |
+| member | address | Wallet to be disabled |
 
 ### isEnabledAddress
 
@@ -139,17 +138,16 @@ Desabilita a carteira a operar no piloto Real Digital Selic.
 function isEnabledAddress(address member) public view returns (bool)
 ```
 
-Verifica se a carteira está habilitada a operar no piloto Real Digital Selic.
+Checks if the wallet is enabled to operate in the Real Digital Selic pilot.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| member | address | Carteira a ser verificada |
+| member | address | Wallet to be checked |
 
 #### Return Values
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| [0] | bool | Retorna um valor booleano que indica se a carteira está habilitada a operar no piloto Real Digital Selic. |
-
+| [0] | bool | Returns a boolean value indicating if the wallet is enabled to operate in the Real Digital Selic pilot. |

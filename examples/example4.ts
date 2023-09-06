@@ -1,9 +1,9 @@
 import { ethers } from "hardhat";
 import abiAddressDiscovery from '../abi/AddressDiscovery.json';
 
-// busca o endereço do contrato do RealDigital
+// finds the RealDigital contract address
 async function example4() {
-    const contract = await ethers.getContractAt(abiAddressDiscovery, '<Endereço contrato Address Discovery>');
+    const contract = await ethers.getContractAt(abiAddressDiscovery, '<Address Discovery contract address>');
     const realDigitalAddress = await contract.addressDiscovery(ethers.utils.id('RealDigital'));
 
     console.log(realDigitalAddress);

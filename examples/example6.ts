@@ -3,36 +3,36 @@ import { BigNumber } from "ethers";
 import abiITPFtOperation1052 from "../abi/ITPFtOperation1052.json";
 
 /**
- * TPFtOperation1052 - Permite que participantes cadastrados no Real Digital 
- * realizem a operação de compra e venda envolvendo Título Público Federal tokenizado (TPFt) 
- * entre si e/ou seus clientes utilizando seus CNPJ8s.
+ * TPFtOperation1052 - Allows participants registered in Real Digital
+ * to perform the purchase and sale operation involving tokenized Federal Public Title (TPFt)
+ * among themselves and/or their clients using their CNPJ8s.
  */
 async function tradeByCNPJ8() {
   const TPFtOperation1052 = await ethers.getContractAt(
     abiITPFtOperation1052,
-    "<Endereço do Contrato TPFtOperation1052>"
+    "<TPFtOperation1052 Contract Address>"
   );
-  // Sender refere-se ao cedente (detentor de TPFts) e receiver refere-se ao cessionário (não detentor de TPFts)
+  // Sender refers to the assignor (holder of TPFts) and receiver refers to the assignee (non-holder of TPFts)
   const [, senderAccount, receiverAccount] = await ethers.getSigners();
   const params = {
-    operationId: "<Número de operação + data vigente no formato yyyyMMdd>",
-    cnpj8Sender: "<CNPJ8 do cedente da operação>",
-    cnpj8Receiver: "<CNPJ8 do cessionário da operação>",
-    callerPart: "<Parte que está transmitindo o comando da operação>",
+    operationId: "<Operation number + current date in yyyyMMdd format>",
+    cnpj8Sender: "<CNPJ8 of the assignor of the operation>",
+    cnpj8Receiver: "<CNPJ8 of the assignee of the operation>",
+    callerPart: "<Party transmitting the operation command>",
     tpftData: {
-      acronym: "<A sigla do TPFt>",
-      code: "<O código único do TPFt>",
-      maturityDate: "<Data de vencimento em milissegundos do TPFt (timestamp Unix)>",
+      acronym: "<Acronym of the TPFt>",
+      code: "<Unique code of the TPFt>",
+      maturityDate: "<TPFt maturity date in milliseconds (Unix timestamp)>",
     },
-    tpftAmount: "<Quantidade de TPFt a ser negociada>",
-    unitPrice: "<Preço unitário do TPFt>",
+    tpftAmount: "<Amount of TPFt to be traded>",
+    unitPrice: "<Unit price of TPFt>",
   };
 
-  const callerPartBySender = BigNumber.from(0); //Quando o cedente está transmitindo o comando da operação.
-  const callerPartByReceiver = BigNumber.from(1); //Quando o cessionário está transmitindo o comando da operação.
+  const callerPartBySender = BigNumber.from(0); //When the assignor is transmitting the operation command.
+  const callerPartByReceiver = BigNumber.from(1); //When the assignee is transmitting the operation command.
 
-  //Execução por parte do sender (cedente) para realizar operação de 
-  //compra e venda informando o CNPJ8.
+  //Execution by the sender (assignor) to perform the purchase and sale operation
+  //informing the CNPJ8.
   const senderTransaction = await TPFtOperation1052
     .connect(senderAccount)
     ?.[
@@ -46,13 +46,13 @@ async function tradeByCNPJ8() {
       params.tpftAmount,
       params.unitPrice
     );
-  
-  //Se aguarda até que a transação enviada pelo sender seja confirmada na blockchain. 
+
+  //Wait until the transaction sent by the sender is confirmed on the blockchain.
   await senderTransaction.wait();
 
-  //Execução por parte do receiver (cessionário) para realizar operação de 
-  //compra e venda informando o CNPJ8.
-  const receiverTransaction = await TPFtOperation1052
+  //Execution by the receiver (assignee) to perform the purchase and sale operation
+  //informing the CNPJ8.
+const receiverTransaction = await TPFtOperation1052
     .connect(receiverAccount)
     ?.[
       "trade(uint256,uint256,uint256,uint8,(string,string,uint256),uint256,uint256)"
@@ -66,44 +66,44 @@ async function tradeByCNPJ8() {
       params.unitPrice
     );
 
-  //Se aguarda até que a transação enviada pelo receiver seja confirmada na blockchain.   
-  await receiverTransaction.wait();
+// Wait until the transaction sent by the receiver is confirmed on the blockchain.
+await receiverTransaction.wait();
 
-  // Resposta da execução da operação de compra e venda
-  console.log(senderTransaction.hash);
-  console.log(receiverTransaction.hash);
+// Response of the purchase and sale operation execution
+console.log(senderTransaction.hash);
+console.log(receiverTransaction.hash);
 }
 
 /**
- * TPFtOperation1052 - Permite que participantes cadastrados no Real Digital 
- * realizem a operação de compra e venda envolvendo Título Público Federal tokenizado (TPFt) 
- * entre si e/ou seus clientes utilizando seus endereços de carteiras.
+ * TPFtOperation1052 - Allows participants registered in Real Digital
+ * to perform the purchase and sale operation involving tokenized Federal Public Title (TPFt)
+ * among themselves and/or their clients using their wallet addresses.
  */
 async function tradeByAddresses() {
   const TPFtOperation1052 = await ethers.getContractAt(
     abiITPFtOperation1052,
-    "<Endereço do Contrato TPFtOperation1052>"
+    "<TPFtOperation1052 Contract Address>"
   );
 
-  // Sender refere-se ao cedente (detentor de TPFts) e receiver refere-se ao cessionário (não detentor de TPFts)
+  // Sender refers to the assignor (holder of TPFts) and receiver refers to the assignee (non-holder of TPFts)
   const [, senderAccount, receiverAccount] = await ethers.getSigners();
   const params = {
-    operationId: "<Número de operação + data vigente no formato yyyyMMdd>",
-    callerPart: "<Parte que está transmitindo o comando da operação>",
+    operationId: "<Operation number + current date in yyyyMMdd format>",
+    callerPart: "<Party transmitting the operation command>",
     tpftData: {
-      acronym: "<A sigla do TPFt>",
-      code: "<O código único do TPFt>",
-      maturityDate: "<Data de vencimento em milissegundos do TPFt (timestamp Unix)>",
+      acronym: "<Acronym of the TPFt>",
+      code: "<Unique code of the TPFt>",
+      maturityDate: "<TPFt maturity date in milliseconds (Unix timestamp)>",
     },
-    tpftAmount: "<Quantidade de TPFt a ser negociada>",
-    unitPrice: "<Preço unitário do TPFt>",
+    tpftAmount: "<Amount of TPFt to be traded>",
+    unitPrice: "<Unit price of TPFt>",
   };
-  
-  const callerPartBySender = BigNumber.from(0); //Quando o cedente está transmitindo o comando da operação.
-  const callerPartByReceiver = BigNumber.from(1); //Quando o cessionário está transmitindo o comando da operação.
 
-  //Registro por parte do sender (cedente) para realizar operação de 
-  //compra e venda informando o endereço das carteiras.  
+  const callerPartBySender = BigNumber.from(0); //When the assignor is transmitting the operation command.
+  const callerPartByReceiver = BigNumber.from(1); //When the assignee is transmitting the operation command.
+
+  //Registration by the sender (assignor) to perform the purchase and sale operation
+  //informing the wallet addresses.
   const senderTransaction = await TPFtOperation1052
     .connect(senderAccount)
     ?.[
@@ -118,11 +118,11 @@ async function tradeByAddresses() {
       params.unitPrice
     );
 
-  //Se aguarda até que a transação enviada pelo sender seja confirmada na blockchain.   
+  // Wait until the transaction sent by the sender is confirmed on the blockchain.
   await senderTransaction.wait();
 
-  //Registro por parte do receiver (cessionário) para realizar operação de 
-  //compra e venda informando o endereço das carteiras.    
+  //Registration by the receiver (assignee) to perform the purchase and sale operation
+  //informing the wallet addresses.
   const receiverTransaction = await TPFtOperation1052
     .connect(receiverAccount)
     ?.[
@@ -136,11 +136,11 @@ async function tradeByAddresses() {
       params.tpftAmount,
       params.unitPrice
     );
-  
-  //Se aguarda até que a transação enviada pelo receiver seja confirmada na blockchain.   
-  await receiverTransaction.wait();  
 
-  // Resposta da execução da operação de compra e venda
+  // Wait until the transaction sent by the receiver is confirmed on the blockchain.
+  await receiverTransaction.wait();
+
+  // Response of the purchase and sale operation execution
   console.log(senderTransaction.hash);
   console.log(receiverTransaction.hash);
 }

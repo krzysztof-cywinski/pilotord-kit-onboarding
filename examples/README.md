@@ -15,13 +15,13 @@ This code has been tested but no audit or vulnerability analysis has been perfor
 [Example 3](example3.ts):
     Participant activating an address for a client and performing a DVt or MEt issuance.
 
-[Exemplo 4](example4.ts):
-Participante buscando o endereço de Real Digital no contrato de AddressDiscovery.
+[Example 4](example4.ts):
+    Participant searching for the Real Digital address in the AddressDiscovery contract.
 
-[Exemplo 5](example5.ts):
-Operação 1002: Registro de liquidação de oferta pública. 
+[Example 5](example5.ts):
+    Operation 1002: Registration of public offering settlement.
 
-[Exemplo 6](example6.ts):
-Operação 1052: Registro de operação de compra e venda entre participantes.
+[Example 6](example6.ts):
+    Operation 1052: Registration of buy and sell operation between participants.
 
 [<<< Back](../README.md)
